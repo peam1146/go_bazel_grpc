@@ -1,0 +1,26 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+
+ts_project(
+    name = "app",
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = ["**/*spec.ts"],
+    ),
+    tsconfig = select({
+        "//conditions:default": "//:tsconfig.json",
+    }),
+    visibility = ["//visibility:private"],
+    deps = [
+        "@npm//@nestjs",
+        "@npm//@types",
+        "@npm//tslib",
+    ],
+)
+
+nodejs_binary(
+    name = "src",
+    data = [":app"],
+    entry_point = ":main.ts",
+    visibility = ["//visibility:public"],
+)
