@@ -14,7 +14,7 @@ type EchoServerImpl struct {
 }
 
 func (s *EchoServerImpl) SayHelloUnary(_ context.Context, request *echo.EchoRequest) (*echo.EchoReply, error) {
-	return &echo.EchoReply{Message: "Hello 1 " + request.Name}, nil
+	return &echo.EchoReply{Message: "Hello" + request.Name}, nil
 }
 
 func main() {
