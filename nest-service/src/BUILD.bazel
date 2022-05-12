@@ -7,6 +7,9 @@ ts_project(
         include = ["**/*.ts"],
         exclude = ["**/*spec.ts"],
     ),
+    declaration = True,
+    incremental = True,
+    source_map = True,
     tsconfig = select({
         "//conditions:default": "//:tsconfig.json",
     }),
