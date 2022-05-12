@@ -26,3 +26,8 @@ alias(
     name = "go-client",
     actual = "//client/src",
 )
+
+alias(
+    name = "nest-service",
+    actual = "//nest-service/src",
+)
