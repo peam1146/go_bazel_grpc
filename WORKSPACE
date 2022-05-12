@@ -40,7 +40,7 @@ rules_proto_dependencies()
 
 rules_proto_toolchains()
 
-# nodejs
+# rules_nodejs
 
 http_archive(
     name = "rules_nodejs",
@@ -62,9 +62,7 @@ node_repositories(
 )
 
 yarn_install(
-    # Name this npm so that Bazel Label references look like @npm//package
     name = "npm",
-    # Paths to the package*.json files
     package_json = "//:package.json",
     yarn_lock = "//:yarn.lock",
 )
@@ -87,3 +85,33 @@ load("//:deps.bzl", "go_dependencies")
 go_dependencies()
 
 gazelle_dependencies()
+
+# docker
+
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "27d53c1d646fc9537a70427ad7b034734d08a9c38924cc6357cc973fed300820",
+    strip_prefix = "rules_docker-0.24.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.24.0/rules_docker-v0.24.0.tar.gz"],
+)
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+
+container_repositories()
+
+load(
+    "@io_bazel_rules_docker//go:image.bzl",
+    _go_image_repos = "repositories",
+)
+
+_go_image_repos()
+
+load(
+    "@io_bazel_rules_docker//nodejs:image.bzl",
+    _nodejs_image_repos = "repositories",
+)
+
+_nodejs_image_repos()

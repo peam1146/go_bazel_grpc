@@ -1,5 +1,6 @@
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 
 ts_project(
     name = "app",
@@ -25,5 +26,14 @@ nodejs_binary(
     name = "src",
     data = [":app"],
     entry_point = ":main.ts",
+    visibility = ["//visibility:public"],
+)
+
+nodejs_image(
+    name = "image",
+    data = [":app"],
+    entry_point = ":main.ts",
+    include_node_repo_args = False,
+    node_repository_name = "nodejs_linux_amd64",  # nodejs_host
     visibility = ["//visibility:public"],
 )
