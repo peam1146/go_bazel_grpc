@@ -14,6 +14,7 @@ type EchoServerImpl struct {
 }
 
 func (s *EchoServerImpl) SayHelloUnary(_ context.Context, request *echo.EchoRequest) (*echo.EchoReply, error) {
+	log.Println("Hello" + request.Name)
 	return &echo.EchoReply{Message: "Hello" + request.Name}, nil
 }
 
