@@ -12,7 +12,8 @@ go_library(
     importpath = "github.com/peam1146/go_bazel_grpc/server/src",
     visibility = ["//visibility:private"],
     deps = [
-        "//echo",
+        "//proto/echo",
+        "//proto/echo2",
         "@org_golang_google_grpc//:go_default_library",
     ],
 )

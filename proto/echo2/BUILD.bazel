@@ -3,22 +3,24 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
-    name = "echo_proto",
-    srcs = ["echo.proto"],
+    name = "echo2_proto",
+    srcs = ["echo2.proto"],
     visibility = ["//visibility:public"],
+    deps = ["//proto/echo:echo_proto"],
 )
 
 go_proto_library(
-    name = "echo_go_proto",
+    name = "echo2_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/peam1146/go_bazel_grpc/echo",
-    proto = ":echo_proto",
+    importpath = "github.com/peam1146/go_bazel_grpc/proto/echo2",
+    proto = ":echo2_proto",
     visibility = ["//visibility:public"],
+    deps = ["//proto/echo"],
 )
 
 go_library(
-    name = "echo",
-    embed = [":echo_go_proto"],
-    importpath = "github.com/peam1146/go_bazel_grpc/echo",
+    name = "echo2",
+    embed = [":echo2_go_proto"],
+    importpath = "github.com/peam1146/go_bazel_grpc/proto/echo2",
     visibility = ["//visibility:public"],
 )
