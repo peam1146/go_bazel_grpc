@@ -4,6 +4,8 @@ load(
     "go_image",
 )
 
+package(default_visibility = ["//visibility:public"])
+
 go_library(
     name = "src_lib",
     srcs = ["main.go"],
@@ -18,7 +20,6 @@ go_library(
 go_binary(
     name = "src",
     embed = [":src_lib"],
-    visibility = ["//visibility:public"],
 )
 
 go_image(
@@ -26,5 +27,4 @@ go_image(
     embed = [":src_lib"],
     goarch = "amd64",
     goos = "linux",
-    visibility = ["//visibility:public"],
 )
