@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "proto/echo/echo.proto";
+
+package echo2;
+option go_package = "github.com/peam1146/go_bazel_grpc/proto/echo2";
+
+service Echo2 {
+  rpc SayHelloUnary (echo.EchoRequest) returns (echo.EchoReply) {}
+}
