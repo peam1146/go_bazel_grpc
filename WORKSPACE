@@ -54,15 +54,11 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
 )
 
-load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories", "yarn_install")
-
-node_repositories(
-    node_version = "18.0.0",
-    yarn_version = "1.22.18",
-)
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
 yarn_install(
     name = "npm",
+    exports_directories_only = True,
     package_json = "//:package.json",
     yarn_lock = "//:yarn.lock",
 )
@@ -101,6 +97,10 @@ load(
 )
 
 container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
 
 load(
     "@io_bazel_rules_docker//go:image.bzl",

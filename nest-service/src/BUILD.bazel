@@ -2,6 +2,8 @@ load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 
+package(default_visibility = ["//visibility:public"])
+
 ts_project(
     name = "app",
     srcs = glob(
@@ -11,13 +13,13 @@ ts_project(
     declaration = True,
     incremental = True,
     source_map = True,
-    tsconfig = select({
-        "//conditions:default": "//:tsconfig.json",
-    }),
-    visibility = ["//visibility:private"],
+    tsconfig = "//:tsconfig.json",
     deps = [
         "@npm//@nestjs",
+        "@npm//@nestjs/core",
+        "@npm//@nestjs/platform-express",
         "@npm//@types",
+        "@npm//@types/node",
         "@npm//tslib",
     ],
 )
@@ -26,14 +28,12 @@ nodejs_binary(
     name = "src",
     data = [":app"],
     entry_point = ":main.ts",
-    visibility = ["//visibility:public"],
 )
 
+# bazel run --platforms=@rules_nodejs//nodejs:linux_amd64 //nest-service/src:image
 nodejs_image(
     name = "image",
-    data = [":app"],
-    entry_point = ":main.ts",
+    binary = ":src",
     include_node_repo_args = False,
-    node_repository_name = "nodejs_linux_amd64",  # nodejs_host
-    visibility = ["//visibility:public"],
+    node_repository_name = "nodejs_linux_amd64",  # nodejs_host #nodejs_linux_amd64
 )
