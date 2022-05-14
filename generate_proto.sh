@@ -8,17 +8,17 @@ for Dir in *; do
     # if dir
     if [ -d "$Dir" ]; then
 
-        cd $Dir
+        cd "$Dir"
         # get proto file
         file=$(ls | grep ".proto$")
 
         # if file exist
-        if [ $file ]; then
+        if [ "$file" ]; then
             echo "proto file in $Dir is $file"
             # generate proto file
             protoc --go_out=. --go_opt=paths=source_relative \
                 --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-                $file
+                "$file"
         fi
         cd ..
     fi
