@@ -54,7 +54,9 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
 )
 
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories", "yarn_install")
+
+node_repositories()
 
 yarn_install(
     name = "npm",
