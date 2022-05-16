@@ -1,4 +1,5 @@
 node_module
 dist
 bazel-out
+.gitignore
 *.pb.go
